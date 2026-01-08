@@ -37,9 +37,8 @@ namespace UniversalForwardPlusVolumetric
             m_DilatedMaxZBufferHandle?.Release();
         }
 
-#if UNITY_6000_0_OR_NEWER
+#if !UNITY_6000_0_OR_NEWER
         [Obsolete]
-#endif
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
         {
             if (m_PassData.generateMaxZCS == null)
@@ -81,10 +80,10 @@ namespace UniversalForwardPlusVolumetric
             desc.height = Mathf.CeilToInt(targetSize.y / 16.0f);
             RenderingUtils.ReAllocateIfNeeded(ref m_DilatedMaxZBufferHandle, desc, FilterMode.Bilinear, name: "Dilated MaxZ mask");
         }
-
-#if UNITY_6000_0_OR_NEWER
-        [Obsolete]
 #endif
+
+#if !UNITY_6000_0_OR_NEWER
+        [Obsolete]
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
             var data = m_PassData;
@@ -149,6 +148,7 @@ namespace UniversalForwardPlusVolumetric
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
         }
+#endif
 
         public override void OnCameraCleanup(CommandBuffer cmd)
         {

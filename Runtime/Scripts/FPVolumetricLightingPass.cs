@@ -83,9 +83,8 @@ namespace UniversalForwardPlusVolumetric
             DestroyHistoryBuffers();
         }
 
-#if UNITY_6000_0_OR_NEWER
+#if !UNITY_6000_0_OR_NEWER
         [Obsolete]
-#endif
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
         {
             if (m_VolumeVoxelizationCS == null
@@ -137,6 +136,7 @@ namespace UniversalForwardPlusVolumetric
             LocalVolumetricFog.RefreshVolumes();
             m_LocalVolumes = LocalVolumetricFog.SortVolumes();
         }
+#endif
 
         private void SetFogShaderVariables(CommandBuffer cmd)
         {
@@ -235,9 +235,8 @@ namespace UniversalForwardPlusVolumetric
             cb._VolumetricMaterialFalloffMode = (int)engineData.falloffMode;
         }
 
-#if UNITY_6000_0_OR_NEWER
+#if !UNITY_6000_0_OR_NEWER
         [Obsolete]
-#endif
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
             s_TAAData.frameIndex = (s_TAAData.frameIndex + 1) % 14;
@@ -337,6 +336,7 @@ namespace UniversalForwardPlusVolumetric
             s_TAAData.prevCamPosRWS = camera.transform.position;
             VolumetricUtils.SetCameraMatrices(renderingData.cameraData, out var v, out var p, out s_TAAData.prevMatrixVP, out var invvp);
         }
+#endif
 
         public override void OnCameraCleanup(CommandBuffer cmd)
         {
